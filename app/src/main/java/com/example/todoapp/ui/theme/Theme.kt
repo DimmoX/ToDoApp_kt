@@ -1,6 +1,5 @@
 package com.example.todoapp.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -18,11 +17,6 @@ private val DarkColorScheme = darkColorScheme(
     tertiary = ColorThree,
     background = ColorOne,
     surface = ColorFour,
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color.Black,
-    onSurface = Color.Black
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -31,28 +25,14 @@ private val LightColorScheme = lightColorScheme(
     tertiary = ColorThree,
     background = ColorOne,
     surface = ColorFour,
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color.Black,
-    onSurface = Color.Black
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
 )
 
 @Composable
 fun TodoAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = false, //isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -65,9 +45,13 @@ fun TodoAppTheme(
         else -> LightColorScheme
     }
 
+    val backgroundColor = Color(0xFF2E5077)
+
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
-        content = content
+        content = {
+            content()
+        }
     )
 }
