@@ -28,7 +28,7 @@ Los datos de las tareas se almacenan en **Firebase Realtime Database**, lo que p
 
 Sigue estos pasos para ejecutar la aplicación en **Android Studio**:
 
-1. **Clonar el repositorio:**
+**Clonar el repositorio:**
 
    ```bash
    git clone https://github.com/tu_usuario/ToDoApp.git
