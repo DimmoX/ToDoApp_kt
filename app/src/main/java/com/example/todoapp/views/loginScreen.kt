@@ -1,18 +1,15 @@
 package com.example.todoapp.views
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -28,14 +25,15 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -55,12 +53,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.todoapp.components.backgroundImageLogin
 import com.example.todoapp.components.tituloApp
-import com.example.todoapp.ui.components.SwipeHintIcon
-import com.example.todoapp.ui.theme.ColorFour
 import com.example.todoapp.ui.theme.ColorThree
 import com.example.todoapp.ui.viewmodel.LoginViewModel
 
-
+/**
+ * Vista de Login que permite al usuario ingresar a la aplicación
+ * @param modifier modificador de la vista
+ * @param navController controlador de navegación
+ * @param loginViewModel ViewModel de la pantalla de Login
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Login(modifier: Modifier = Modifier, navController: NavController, loginViewModel: LoginViewModel) {
@@ -68,21 +69,36 @@ fun Login(modifier: Modifier = Modifier, navController: NavController, loginView
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(false) }
-    var errorMessage by remember { mutableStateOf("") }
     var showRecoveryPasswordCard by remember { mutableStateOf(false) }
 
-
-    val listUsers = loginViewModel.obtenerUsuarios()
-
     val context = LocalContext.current
-    SideEffect {
-        if (errorMessage.isNotEmpty()) {
-            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+
+    val loginStatus by loginViewModel.loginStatus.observeAsState()
+    val errorMessage by loginViewModel.errorMessage.observeAsState()
+    val usuario by loginViewModel.usuario.observeAsState()
+
+    var hasShownLoginToast by remember { mutableStateOf(false) }
+
+
+    LaunchedEffect(loginStatus) {
+        if (loginStatus == "Login exitoso" && usuario != null) {
+            if (!hasShownLoginToast) {
+                Toast.makeText(context, "Login exitoso", Toast.LENGTH_SHORT).show()
+                hasShownLoginToast = true
+            }
+            navController.navigate("homeScreen") {
+                popUpTo("loginScreen") { inclusive = true }
+            }
         }
     }
 
-    Log.d("listUsers - Login", "ListUsers: $listUsers")
-
+    SideEffect {
+        errorMessage?.let {
+            if (it.isNotEmpty()) {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -92,7 +108,6 @@ fun Login(modifier: Modifier = Modifier, navController: NavController, loginView
 
         backgroundImageLogin(modifier = Modifier)
 
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -101,32 +116,9 @@ fun Login(modifier: Modifier = Modifier, navController: NavController, loginView
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-
                 tituloApp(true, navController)
-
             }
-
-//            TODO: Implementar el SwipeHintIcon
-//            Box(
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .padding(bottom = 100.dp),
-//                contentAlignment = Alignment.CenterStart
-//            ) {
-//
-//                SwipeHintIcon(
-//                    "left",
-//                    modifier = Modifier.align(Alignment.CenterStart)
-//                )
-//
-//                SwipeHintIcon(
-//                    "right",
-//                    modifier = Modifier.align(Alignment.CenterEnd)
-//                )
-//            }
-
         }
-
 
         Box(
             modifier = Modifier
@@ -207,14 +199,7 @@ fun Login(modifier: Modifier = Modifier, navController: NavController, loginView
 
                     Button(
                         onClick = {
-                            val validacionLogin = loginViewModel.validarLogin(email, password)
-
-                            if (validacionLogin == "true") {
-                                navController.navigate("homeScreen")
-
-                            } else {
-                                errorMessage = "Credenciales incorrectas"
-                            }
+                            loginViewModel.validarLogin(email, password)
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = ColorThree),
                         modifier = Modifier
@@ -251,22 +236,13 @@ fun Login(modifier: Modifier = Modifier, navController: NavController, loginView
                 Card(
                     modifier = Modifier
                         .align(Alignment.Center)
-//                        .padding(20.dp)
-                        .fillMaxWidth(0.9f),
-//                        .background(Color.Transparent.copy(alpha = 0.5f)),
-                    elevation = CardDefaults.cardElevation(5.dp),
+                        .fillMaxWidth(0.8f),
+                    elevation = CardDefaults.cardElevation(10.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = Color.White.copy(alpha = 0.5f),
-                        contentColor = Color.White
+                        containerColor = Color.White.copy(alpha = 0.8f)
                     )
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth()
-                    ) {
-                        recoveryPasswordScreen(navController = navController)
-                    }
+                    recoveryPasswordScreen(navController = navController)
                 }
         }
     }

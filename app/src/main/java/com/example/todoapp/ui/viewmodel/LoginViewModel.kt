@@ -1,59 +1,96 @@
 package com.example.todoapp.ui.viewmodel
 
-import android.util.Log
 import android.util.Patterns
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.todoapp.data.models.UsuariosModel
 import com.example.todoapp.data.repository.UsuariosRepository
+import kotlinx.coroutines.launch
 
-class LoginViewModel: ViewModel() {
+/**
+ * ViewModel para la pantalla de login
+ */
+open class LoginViewModel: ViewModel() {
 
-    private val _usuariosRepository = UsuariosRepository()
+    private val _usuario = MutableLiveData<UsuariosModel?>()
+    val usuario: LiveData<UsuariosModel?> get() = _usuario
 
-    private val _usuario = mutableStateOf<UsuariosModel?>(null)
-    val usuario: State<UsuariosModel?> get() = _usuario
+    private val _agregarUsuarioStatus = MutableLiveData<Boolean>()
+    val agregarUsuarioStatus: LiveData<Boolean> get() = _agregarUsuarioStatus
 
-    private val _usuarios = mutableStateOf<List<UsuariosModel>>(emptyList())
-    val usuarios: State<List<UsuariosModel>> get() = _usuarios
+    private val _eliminacionStatus = MutableLiveData<Boolean>()
+    val eliminacionStatus: LiveData<Boolean> get() = _eliminacionStatus
 
-    fun agregarUsuario(usuarioModel: UsuariosModel) {
-        _usuariosRepository.agregarUsuario(usuarioModel)
-    }
 
-    fun validarLogin(email: String, passwd: String): String{
+    private val _loginStatus = MutableLiveData<String>()
+    val loginStatus: LiveData<String> get() = _loginStatus
+
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> get() = _loginStatus
+
+    /**
+     * Método para agregar un usuario
+     * @param usuario Usuario a agregar
+     * @param passwd Contraseña del usuario
+     */
+    fun validarLogin(email: String, passwd: String){
+        if (email.isBlank() || passwd.isBlank()) {
+            _loginStatus.postValue("Campos vacios")
+            _errorMessage.postValue("Por favor, ingrese tanto el email como la contraseña")
+            return
+        }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            return "El email ingresado no es válido"
+            _loginStatus.postValue("Email incorrecto")
+            _errorMessage.postValue("Por favor, ingrese un email correcto")
+            _usuario.postValue(null)
+            return
         }
         if (passwd.length < 8) {
-            return "La contraseña debe tener al menos 8 caracteres"
+            _loginStatus.postValue("Contraseña incorrecta")
+            _errorMessage.postValue("Por favor, ingrese una contraseña de al menos 8 caracteres")
+            _usuario.postValue(null)
+            return
         }
 
-        val usuarioEncontrado = _usuariosRepository.obtenerUsuario(email, passwd)
-        _usuario.value = usuarioEncontrado
+        viewModelScope.launch {
+            try {
+                val usuarioLiveData = UsuariosRepository.obtenerUsuario(email, passwd)
 
-        Log.d("LoginViewModel-usuarioEncontrado", "Usuario: $usuarioEncontrado")
-
-        return if (usuarioEncontrado != null) {
-            "true"
-        } else {
-            "Credenciales incorrectas"
+                usuarioLiveData.observeForever { usuario ->
+                    if (usuario != null) {
+                        _usuario.postValue(usuario)
+                        _loginStatus.postValue("Login exitoso")
+                    } else {
+                        _usuario.postValue(null)
+                        _loginStatus.postValue("Credenciales incorrectas")
+                        _errorMessage.postValue("Credenciales incorrectas. Por favor verifique su email o contraseña.")
+                    }
+                }
+            } catch (e: Exception) {
+                _usuario.postValue(null)
+                _loginStatus.postValue("Error en la conexión o en la consulta")
+                _errorMessage.postValue("Hubo un error al intentar conectar. Intente más tarde.")
+            }
         }
     }
 
+    /**
+     * Método para obtener un usuario
+     */
     fun obtenerUsuarios(): List<UsuariosModel> {
-        return _usuariosRepository.obtenerUsuarios()
+        return UsuariosRepository.obtenerUsuarios()
     }
 
-    fun eliminarUsuario(email: String){
-        val success = _usuariosRepository.eliminarUsuario(email)
-        if (success) {
-            _usuarios.value = _usuariosRepository.obtenerUsuarios()
+    /**
+     * Método para eliminar un usuario
+     */
+    fun eliminarUsuario(email: String) {
+        val deletionLiveData = UsuariosRepository.eliminarUsuario(email)
+
+        deletionLiveData.observeForever { isSuccess ->
+            _eliminacionStatus.postValue(isSuccess)
         }
     }
-
-//    fun usuarioActual(): UsuariosModel? {
-//        return _usuario.value
-//    }
 }

@@ -1,49 +1,114 @@
 package com.example.todoapp.data.repository
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.todoapp.data.models.UsuariosModel
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
-class UsuariosRepository {
+object UsuariosRepository {
 
-    // Lista en memoria que almacena los usuarios
+    // Lista mutable de usuarios
     private val usuarios: MutableList<UsuariosModel> = mutableListOf()
 
-    init {
-        // Asegúrate de agregar los usuarios predeterminados si la lista está vacía
-        if (usuarios.isEmpty()) {
-            agregarUsuariosPredeterminados()
-        }
+    // Se invoca a la base de datos de Firebase utilizando extensión KTX
+    val database = Firebase.database
+    // Se referencia a la colección de usuarios
+    val refUsers = database.getReference("usuarios")
+
+    /**
+     * Agrega un usuario a la base de datos de Firebase
+     * @param usuario - Usuario a agregar
+     * @return LiveData<Boolean> - indica si la operación fue exitosa
+     */
+    fun agregarUsuario(usuario: UsuariosModel): LiveData<Boolean> {
+        val addUser = MutableLiveData<Boolean>()
+
+        val usuarioId = refUsers.push().key
+        usuario.id = usuarioId ?: ""
+
+        val emailValidado = usuario.email.replace(".", "_")
+
+        refUsers.child(emailValidado).setValue(usuario)
+            .addOnSuccessListener {
+                addUser.postValue(true)
+                Log.d("UsuariosRepository", "Usuario ${emailValidado} agregado a Firebase")
+            }
+            .addOnFailureListener { exception ->
+                addUser.postValue(false)
+                Log.e("UsuariosRepository", "Error al agregar usuario ${usuario.email}: ${exception.message}")
+            }
+        return addUser
     }
 
-    private fun agregarUsuariosPredeterminados() {
-        val usuariosPredeterminados = listOf(
-            UsuariosModel(1, "Juan", "Perez", "jperez@test.cl", "ABCD1234"),
-            UsuariosModel(2, "Ana", "Gonzalez", "agonzalez@test.cl", "1234ABCD"),
-            UsuariosModel(3, "Carlos", "Martinez", "cmartinez@test.cl", "1234CDAB"),
-            UsuariosModel(4, "Maria", "Lopez", "mlopez@test.cl", "AB12CD34"),
-            UsuariosModel(5, "Luis", "Fernandez", "lfernandez@test.cl", "XYZ98765")
-        )
-        usuarios.addAll(usuariosPredeterminados)
-    }
-
-    fun agregarUsuario(usuarioModel: UsuariosModel) {
-        usuarios.add(usuarioModel)
-    }
-
+    /**
+     * Obtiene la lista de usuarios de la base de datos de Firebase
+     * @return List<UsuariosModel> - Lista de usuarios
+     */
     fun obtenerUsuarios(): List<UsuariosModel> {
+
+        refUsers.get().addOnSuccessListener { snapshot ->
+            snapshot.children.forEach { child ->
+                val usuario = child.getValue(UsuariosModel::class.java)
+                if (usuario != null) {
+                    usuarios.add(usuario)
+                }
+            }
+            Log.d("UsuariosRepository", "Usuarios obtenidos exitosamente")
+        }.addOnFailureListener { exception ->
+            Log.e("UsuariosRepository", "Error al obtener usuarios: ${exception.message}")
+        }
+        Log.d("UsuariosRepository", "Usuarios obtenidos: ${usuarios.size}")
         return usuarios
     }
 
-    fun obtenerUsuario(email: String, passwd: String): UsuariosModel? {
-        return usuarios.find { it.email == email && it.passwd == passwd }
+    /**
+     * Obtiene un usuario de la base de datos de Firebase
+     * @param email - Email del usuario
+     * @param passwd - Contraseña del usuario
+     * @return LiveData<UsuariosModel?> - Usuario obtenido
+     */
+    fun obtenerUsuario(email: String, passwd: String): LiveData<UsuariosModel?> {
+        val usuarioLiveData = MutableLiveData<UsuariosModel?>()
+
+        val emailValidado = email.replace(".", "_")
+
+        refUsers.child(emailValidado).get()
+            .addOnSuccessListener { dataSnapshot ->
+                val usuario = dataSnapshot.getValue(UsuariosModel::class.java)
+
+                if (usuario != null && usuario.passwd == passwd) {
+                    usuarioLiveData.postValue(usuario)
+                } else {
+                    usuarioLiveData.postValue(null)
+                }
+            }
+            .addOnFailureListener { exception ->
+                usuarioLiveData.postValue(null)
+            }
+
+        return usuarioLiveData
     }
 
-    fun eliminarUsuario(email: String): Boolean {
-        val usuario = usuarios.find { it.email == email }
-        return if (usuario != null) {
-            usuarios.remove(usuario)
-            true
-        } else {
-            false
-        }
+    /**
+     * Elimina un usuario de la base de datos de Firebase
+     * @param email - Email del usuario a eliminar
+     * @return LiveData<Boolean> - indica si la operación fue exitosa
+     */
+    fun eliminarUsuario(email: String): LiveData<Boolean> {
+        val deletionLiveData = MutableLiveData<Boolean>()
+
+        val emailValidado = email.replace(".", "_")
+
+        refUsers.child(emailValidado).removeValue()
+            .addOnSuccessListener {
+                deletionLiveData.postValue(true)
+            }
+            .addOnFailureListener { exception ->
+                deletionLiveData.postValue(false)
+            }
+
+        return deletionLiveData
     }
 }

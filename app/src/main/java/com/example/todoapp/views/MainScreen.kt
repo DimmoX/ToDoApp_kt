@@ -14,8 +14,15 @@ import com.example.todoapp.components.VideoBackground
 import com.example.todoapp.components.tituloApp
 import com.example.todoapp.ui.components.SwipeHintIcon
 
+/**
+ * Main Screen que contiene el video de fondo, el titulo de la app
+ * es el primer screen que se muestra al abrir la app
+ * @param modifier modificador de la pantalla
+ * @param navController controlador de navegación
+ */
 @Composable
 fun mainScreen(modifier: Modifier, navController: NavController) {
+
     Box(){
         VideoBackground()
 

@@ -2,7 +2,6 @@ package com.example.todoapp.views
 
 import android.util.Patterns
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,12 +29,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.todoapp.ui.theme.ColorThree
 import com.example.todoapp.ui.viewmodel.recoveryPasswdViewModel
 
+/**
+ * Recovery password, permite recuperar la contraseña de un usuario
+ * @param navController controlador de navegación
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun recoveryPasswordScreen(navController: NavController) {
@@ -65,16 +69,14 @@ fun recoveryPasswordScreen(navController: NavController) {
     }
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White.copy(0.8f))
     ) {
         Text(
             text = "Recuperar contraseña",
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             color = ColorThree,
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(10.dp).fillMaxWidth(),
+            textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(20.dp))
         TextField(
@@ -83,7 +85,8 @@ fun recoveryPasswordScreen(navController: NavController) {
             leadingIcon = { Icon(Icons.Default.Person, null) },
             label = { Text("Ingresa tu Email") },
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(16.dp),
             shape = RoundedCornerShape(50.dp),
             singleLine = true,
             colors = TextFieldDefaults.textFieldColors(
@@ -92,7 +95,9 @@ fun recoveryPasswordScreen(navController: NavController) {
                 focusedLabelColor = Color.Black
             )
         )
+
         Spacer(modifier = Modifier.height(20.dp))
+
         Button(
             onClick = {
                 if (email.isNotEmpty()) {
@@ -107,7 +112,7 @@ fun recoveryPasswordScreen(navController: NavController) {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp),
+                .padding(16.dp),
             colors = ButtonDefaults.buttonColors(containerColor = ColorThree),
         ) {
             Text("Recuperar contraseña")
@@ -132,7 +137,7 @@ fun recoveryPasswordScreen(navController: NavController) {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp),
+                .padding(16.dp),
             colors = ButtonDefaults.buttonColors(containerColor = ColorThree)
         ) {
             Text("Regresar")

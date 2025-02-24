@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.gms.google.services)
+//    alias(libs.plugins.googleServices)
 }
 
 android {
@@ -54,6 +56,28 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:1.0.5")
     implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation(libs.androidx.runtime.livedata)
+    implementation("androidx.core:core-ktx:1.15.0")
+//    implementation(libs.firebase.database)
+//    implementation(platform(libs.firebase.bom))
+//    implementation(libs.firebase.crashlytics)
+
+    implementation(platform("com.google.firebase:firebase-bom:31.0.2"))
+
+    // Firebase Realtime Database
+    implementation("com.google.firebase:firebase-database-ktx")
+
+    // Firebase Firestore
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
+    // Firebase Authentication (si lo usas)
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+    // Firebase Analytics (opcional)
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.runner)
+    implementation(libs.androidx.navigation.testing)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -61,6 +85,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
 
     val media3_version = "1.4.1"
     // For media playback using ExoPlayer

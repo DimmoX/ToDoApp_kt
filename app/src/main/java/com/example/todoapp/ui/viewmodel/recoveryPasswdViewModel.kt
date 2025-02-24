@@ -7,13 +7,11 @@ import com.example.todoapp.data.repository.UsuariosRepository
 
 class recoveryPasswdViewModel : ViewModel() {
 
-    private val _usuariosRepository = UsuariosRepository()
-
     private val _recoveryResult = MutableLiveData<RecoveryResult>()
     val recoveryResult: LiveData<RecoveryResult> get() = _recoveryResult
 
     fun recoveryPassword(email: String) {
-        val listUsuarios = _usuariosRepository.obtenerUsuarios()
+        val listUsuarios = UsuariosRepository.obtenerUsuarios()
         val usuario = listUsuarios.find { it.email == email }
 
         if (usuario != null) {
