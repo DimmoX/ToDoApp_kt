@@ -1,4 +1,4 @@
-package com.example.todoapp.views
+package devmovil.duocuc.todoapp.views
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,9 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.todoapp.components.VideoBackground
-import com.example.todoapp.components.tituloApp
-import com.example.todoapp.ui.components.SwipeHintIcon
+import devmovil.duocuc.todoapp.components.VideoBackground
+import devmovil.duocuc.todoapp.components.tituloApp
+import devmovil.duocuc.todoapp.ui.components.SwipeHintIcon
 
 /**
  * Main Screen que contiene el video de fondo, el titulo de la app

@@ -1,4 +1,4 @@
-package com.example.todoapp.views
+package devmovil.duocuc.todoapp.views
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -48,10 +48,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.todoapp.components.BackgroundImageRegister
-import com.example.todoapp.components.tituloApp
-import com.example.todoapp.ui.theme.ColorThree
-import com.example.todoapp.ui.viewmodel.CreateAccountViewModel
+import devmovil.duocuc.todoapp.components.BackgroundImageRegister
+import devmovil.duocuc.todoapp.components.tituloApp
+import devmovil.duocuc.todoapp.ui.theme.ColorThree
+import devmovil.duocuc.todoapp.ui.viewmodel.CreateAccountViewModel
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)

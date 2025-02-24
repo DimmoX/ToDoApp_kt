@@ -1,4 +1,4 @@
-package com.example.todoapp.views
+package devmovil.duocuc.todoapp.views
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -36,9 +36,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.todoapp.ui.components.dropdownStatusTareas
-import com.example.todoapp.ui.navigation.NavigationDrawer
-import com.example.todoapp.ui.viewmodel.TareasViewModel
+import devmovil.duocuc.todoapp.ui.components.dropdownStatusTareas
+import devmovil.duocuc.todoapp.ui.navigation.NavigationDrawer
+import devmovil.duocuc.todoapp.ui.viewmodel.TareasViewModel
 
 /**
  * TareasPendientes: Pantalla que muestra las tareas pendientes

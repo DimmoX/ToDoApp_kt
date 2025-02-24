@@ -1,4 +1,4 @@
-package com.example.todoapp.data.models
+package devmovil.duocuc.todoapp.data.models
 
 /**
  * Clase que representa un modelo de tareas

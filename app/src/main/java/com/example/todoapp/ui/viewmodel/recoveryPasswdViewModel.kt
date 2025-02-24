@@ -1,9 +1,9 @@
-package com.example.todoapp.ui.viewmodel
+package devmovil.duocuc.todoapp.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.todoapp.data.repository.UsuariosRepository
+import devmovil.duocuc.todoapp.data.repository.UsuariosRepository
 
 class recoveryPasswdViewModel : ViewModel() {
 

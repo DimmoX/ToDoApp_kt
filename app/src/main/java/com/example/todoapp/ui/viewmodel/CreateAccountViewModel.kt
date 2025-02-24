@@ -1,11 +1,11 @@
-package com.example.todoapp.ui.viewmodel
+package devmovil.duocuc.todoapp.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.todoapp.data.models.UsuariosModel
-import com.example.todoapp.data.repository.UsuariosRepository
+import devmovil.duocuc.todoapp.data.models.UsuariosModel
+import devmovil.duocuc.todoapp.data.repository.UsuariosRepository
 
 /**
  * ViewModel para la creación de un nuevo usuario

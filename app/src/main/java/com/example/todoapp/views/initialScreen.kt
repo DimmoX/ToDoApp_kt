@@ -1,4 +1,4 @@
-package com.example.todoapp.views
+package devmovil.duocuc.todoapp.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,9 +17,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.todoapp.components.VideoBackground
-import com.example.todoapp.components.button
-import com.example.todoapp.components.tituloApp
+import devmovil.duocuc.todoapp.components.VideoBackground
+import devmovil.duocuc.todoapp.components.button
+import devmovil.duocuc.todoapp.components.tituloApp
 
 
 @Composable

@@ -1,4 +1,4 @@
-package com.example.todoapp.views
+package devmovil.duocuc.todoapp.views
 
 import android.util.Patterns
 import android.widget.Toast
@@ -33,8 +33,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.todoapp.ui.theme.ColorThree
-import com.example.todoapp.ui.viewmodel.recoveryPasswdViewModel
+import devmovil.duocuc.todoapp.ui.theme.ColorThree
+import devmovil.duocuc.todoapp.ui.viewmodel.recoveryPasswdViewModel
 
 /**
  * Recovery password, permite recuperar la contraseña de un usuario

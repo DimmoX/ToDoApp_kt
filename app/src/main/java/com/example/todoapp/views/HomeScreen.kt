@@ -1,4 +1,4 @@
-package com.example.todoapp.views
+package devmovil.duocuc.todoapp.views
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -58,12 +58,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.todoapp.components.backgroundImageHome
-import com.example.todoapp.data.models.TareasModel
-import com.example.todoapp.data.models.UsuariosModel
-import com.example.todoapp.ui.navigation.NavigationDrawer
-import com.example.todoapp.ui.viewmodel.LoginViewModel
-import com.example.todoapp.ui.viewmodel.TareasViewModel
+import devmovil.duocuc.todoapp.components.backgroundImageHome
+import devmovil.duocuc.todoapp.data.models.TareasModel
+import devmovil.duocuc.todoapp.data.models.UsuariosModel
+import devmovil.duocuc.todoapp.ui.navigation.NavigationDrawer
+import devmovil.duocuc.todoapp.ui.viewmodel.LoginViewModel
+import devmovil.duocuc.todoapp.ui.viewmodel.TareasViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
