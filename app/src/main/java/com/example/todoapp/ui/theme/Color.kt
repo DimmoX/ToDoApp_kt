@@ -1,4 +1,4 @@
-package com.example.todoapp.ui.theme
+package devmovil.duocuc.todoapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

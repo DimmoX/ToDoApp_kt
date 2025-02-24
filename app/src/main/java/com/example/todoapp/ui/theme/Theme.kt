@@ -1,4 +1,4 @@
-package com.example.todoapp.ui.theme
+package devmovil.duocuc.todoapp.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

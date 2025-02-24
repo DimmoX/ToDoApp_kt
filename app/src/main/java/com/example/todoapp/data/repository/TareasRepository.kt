@@ -1,11 +1,11 @@
-package com.example.todoapp.data.repository
+package devmovil.duocuc.todoapp.data.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.todoapp.data.models.TareasModel
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import devmovil.duocuc.todoapp.data.models.TareasModel
 
 object TareasRepository {
 

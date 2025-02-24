@@ -1,4 +1,4 @@
-package com.example.todoapp.ui.components
+package devmovil.duocuc.todoapp.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package com.example.todoapp.ui.navigation
+package devmovil.duocuc.todoapp.ui.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.border

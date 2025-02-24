@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.todoapp"
+    namespace = "devmovil.duocuc.todoapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.todoapp"
+        applicationId = "devmovil.duocuc.todoapp"
         minSdk = 34
         targetSdk = 34
         versionCode = 1

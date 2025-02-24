@@ -1,11 +1,11 @@
-package com.example.todoapp.ui.viewmodel
+package devmovil.duocuc.todoapp.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.todoapp.data.models.TareasModel
-import com.example.todoapp.data.repository.TareasRepository
+import devmovil.duocuc.todoapp.data.models.TareasModel
+import devmovil.duocuc.todoapp.data.repository.TareasRepository
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

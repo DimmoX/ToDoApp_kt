@@ -1,12 +1,12 @@
-package com.example.todoapp.ui.viewmodel
+package devmovil.duocuc.todoapp.ui.viewmodel
 
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.todoapp.data.models.UsuariosModel
-import com.example.todoapp.data.repository.UsuariosRepository
+import devmovil.duocuc.todoapp.data.models.UsuariosModel
+import devmovil.duocuc.todoapp.data.repository.UsuariosRepository
 import kotlinx.coroutines.launch
 
 /**
