@@ -61,6 +61,8 @@ dependencies {
 //    implementation(platform(libs.firebase.bom))
 //    implementation(libs.firebase.crashlytics)
 
+    implementation("com.google.mlkit:text-recognition:16.0.0")
+
     implementation(platform("com.google.firebase:firebase-bom:31.0.2"))
 
     // Firebase Realtime Database

@@ -19,6 +19,7 @@ import devmovil.duocuc.todoapp.views.TareasPendientes
 import devmovil.duocuc.todoapp.views.homeScreen
 import devmovil.duocuc.todoapp.views.initialScreen
 
+
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +54,7 @@ class MainActivity : ComponentActivity() {
                     composable("tareas_pendientes") {
                         TareasPendientes(modifier = Modifier, navController)
                     }
+
                 }
             }
         }

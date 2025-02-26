@@ -325,7 +325,9 @@ fun TaskCard(onClick: () -> Unit) {
                         .border(1.dp, Color.Black, RoundedCornerShape(50.dp)),
                     singleLine = true,
                     trailingIcon = {
-                        IconButton(onClick = { permissionLauncher.launch(Manifest.permission.RECORD_AUDIO) }) {
+                        IconButton(
+                            onClick = { permissionLauncher.launch(Manifest.permission.RECORD_AUDIO) }
+                        ) {
                             Icon(imageVector = Icons.Filled.Mic, contentDescription = "Micrófono")
                         }
                     },
