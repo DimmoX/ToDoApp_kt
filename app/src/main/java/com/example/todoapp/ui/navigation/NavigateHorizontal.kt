@@ -5,7 +5,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import devmovil.duocuc.todoapp.views.initialScreen
+import com.example.todoapp.views.analyticsImageIA
 import devmovil.duocuc.todoapp.views.mainScreen
 
 /**
@@ -23,7 +23,8 @@ fun vistaDeslizable(modifier: Modifier, navController: NavController) {
     ) { page ->
         when (page) {
             0 -> mainScreen(modifier, navController)
-            1 -> initialScreen(modifier, navController)
+//            1 -> initialScreen(modifier, navController)
+            1 -> analyticsImageIA()
         }
     }
 }
